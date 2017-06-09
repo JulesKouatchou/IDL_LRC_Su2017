@@ -1,0 +1,91 @@
+;----------
+; 1D Arrays
+;----------
+
+a=intarr(100)              ; define a as integer array a[0],..,a[99]=0
+a=dblarr(100)              ; double-precision float array = 0.0000000
+a=a+1                      ; now they are all 1.0000000
+for i=0,19 do a[i]=i       ; remember that IDL starts counting at 0
+a=indgen(20)               ; same thing: a=[0,1,....,19] without a[] declaration
+print,a[0],a[19],a[10:19] 
+print,a[*]                 ; same as print,a and as print,a[0:19]
+b=sqrt(a)                  ; check that b is a float array - why?
+print,a+b
+c=b                        ; define float array the same size as a and b
+for i=0,19 do if (b[i] gt 3) then $
+     c[i] = a[i] + b[i] else c[i] = a[i]
+d = a+b*(b gt 3) ; the same, processes faster, needs no declaration
+
+;----------
+; 2D Arrays
+;----------
+ar = [[1,2,3],[4,5,6]] ; integer [3,2] array - same as indgen(3,2)
+print,ar[0],ar[0,0]    ; mind the virtual finger
+print,ar[0,*]          ; * = all values of this index
+print,n_elements(ar)   ; predict all these
+print,total(ar)        ; for large arrays set /double
+print,shift(ar,-1)
+print,transpose(ar)
+print,reverse(ar)
+
+;----------
+; 3D Arrays
+;----------
+
+ar=indgen(3,4,5)+1         ; let’s say 3x4 px frames in a 5-frame movie
+print,ar                   ; successive indices run slower
+ar3=ar(*,*,2)              ; third movie frame
+print,total(ar)            ; sum all elements
+print,total(ar,1)          ; (4,5) row sums = sum over other dimensions
+print,total(ar,2)          ; (3,5) column sums
+print,total(ar,3)          ; (3,4) frame sums
+sizear=size(ar)
+print,sizear               ; nr dims, dim1, dim2, dim3, type (integer), nr elements
+mean=total(ar,3)/sizear(3) ; temporal mean of this movie
+xslice=ar[*,0,*]           ; distill (x,t) timeslice at y=0
+xslice=reform(xslice)      ; reform removes degenerate dimensions
+
+;---------------
+; Array commands
+;---------------
+
+nums = randomn(systime(1),1000)
+print, mean(nums)
+print, stddev(nums)
+print, median(nums)
+print, total(nums)
+
+;----------------
+; WHERE statement
+;----------------
+
+nums = randomn(systime(1),1000)
+a = WHERE(nums lt -1 or nums gt 1)
+print, n_elements(a)
+print, n_elements(a)/n_elements(nums)
+print, float(n_elements(a))/n_elements(nums)
+a = where(nums lt -2 or nums gt 2)
+print, float(n_elements(a))/n_elements(nums)
+
+;-----------------
+; Array arithmetic
+;-----------------
+
+a = findgen(3,3)
+print, a
+b = 8.-findgen(3,3)
+print, b
+print, a*b
+
+;----------------------
+; Matrix multiplication
+;----------------------
+
+a = [[2,3],[-0.5,4]]
+a_i = invert(a)
+print, a_i#a
+
+a = findgen(2,3)
+b = findgen(3,2)
+print, a#b
+print, a##b

@@ -1,0 +1,27 @@
+image = {name:'Test Image', valid_range: [0.0, 100.0],  $
+         data:dist(256)}
+
+help, image
+help, image, /structure
+print, image.name
+help, image.(1)
+
+sample = {date:'19-Mar-1999', time:'20:02:05', $
+          image: image}
+
+help, sample, /structure
+print, n_tags(sample)
+help, sample.image, /structure
+print, sample.date
+print, sample.image.name
+
+sequence = replicate(image, 10)
+
+sequence[0].name = 'First Test Image'
+sequence[0].data[0:100] = 1.0
+
+; This is not allowed
+;--------------------
+a = {name:'Sean', age:32}
+b = {name:'Kate', age:25}
+c = [a, b]

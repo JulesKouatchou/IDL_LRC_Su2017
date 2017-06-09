@@ -1,0 +1,9 @@
+x=2
+ 
+CASE x OF
+   1: PRINT, 'one'
+   2: PRINT, 'two'
+   3: PRINT, 'three'
+   4: PRINT, 'four'
+   ELSE: PRINT, 'Not one through four'
+ENDCASE

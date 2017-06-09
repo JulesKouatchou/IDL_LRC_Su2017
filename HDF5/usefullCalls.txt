@@ -1,0 +1,9 @@
+To interactively browse a file:
+
+    ok = h5_browser('file_name.h5')
+
+To programmatically access the data:
+
+    s = h5_parse('file_name.h5')
+    help, s, /structure
+

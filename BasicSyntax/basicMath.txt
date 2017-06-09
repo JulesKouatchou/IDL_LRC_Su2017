@@ -1,0 +1,63 @@
+
+print,3*5              ; semicolon = comment, IDL skips the rest of the line
+a=3*5                  ; no variable declaration needed
+a = 3 * 5              ; add spaces as you like
+help,a                 ; show nature and value of this variable
+help,A                 ; IDL is case-insensitive, shows variables in caps
+whatever_name_you_like$like_this_perhaps = a      ; _ and $ are permitted
+print,whatever_name_you_like$like_this_perhaps    ; no spaces, +, -, *
+spectrum_AR10910=1    ; variable names must start with alphabetic character
+d=32767               ; "short" integers run from -32768 to + 32767
+print,d+1             ; did you predict this value?
+print,d+1.            ; IDLWAVE: SHIFT mouse2 = print variable under cursor
+print,2^15            ;
+print,2.^15           ; why is the integer word length not 16 bits?
+? integer             ; check the other number formats
+print,3276700l        ; long integer, sign+31 bits
+print,3276700ul       ; unsigned long integer, 32 bits
+print,3276700ull      ; unsigned long long integer, 64 bits
+print,3/5
+print,3/5.            ; operation with one float makes the result a float
+print,2^15.
+a=[1,2,3,4,5,6]       ; IDL variables can be 1-8 dimension arrays
+a=[0,a,7]             ; lengthen this 1D "vector" by adding value(s)
+print,a,1E6*a         ; single precision: 6 significant digits, < 10^38
+print,a,1D6*a         ; double precision: 16 significant digits
+print,a,1/a           ; divide by 0 gives error message without stop
+print,a,1./a
+print,a,a^2
+print,a,alog10(10^a)  ; NaN = Not a Number
+print,a,alog10(10^float(a))
+a=1.*a                ; convert into floats
+print,a,alog10(10^a)
+print,a,alog(exp(a))
+print,a,acos(cos(a))  ; a in radians
+print,a,acos(cos(!pi/a))*180./!pi    ; !something is a system variable
+print,!dpi                           ; double precision
+print,!dtor                          ; so what is this?
+print,a,acos(cos(!pi/a))*!radeg      ; another one
+print,a,a mod 2
+print,fix(!pi)                       ; fix = entier to short integer
+print,long(!pi*1E8)                  ; long = entier to long integer
+b=sqrt(a)                            ; type of b is defined through its assignment
+help                                 ; help without variable shows all variables
+print,’b=’,b                         ; ’something’ is a string
+
+pathfile=’rootdir/homedir/ownerdir/workdir/todaydir/thisfile.txt’
+print,strmid(pathfile,strpos(pathfile,’/’,/reverse_search)+1)   ; IDL...
+print,’b = ’,string(b,format=’(f5.2)’)                          ; ancient Fortran
+print,’b = ’,strmid(string(b,format=’(f5.2)’),1)                ; IDL...
+print,’b = ’,strmid(string(b+1e3,format=’(f7.2)’),1,6)          ; with zero padding
+print,’b = ’,ntostr(b)                           ; that’s easy! Google ntostr.pro
+print,’b = ’,ntostr(b,format=’(f5.2)’)           ; better spaces removal
+print,’b = ’,trim(b)                             ; SSW alternative
+c=!pi^50                                         ; make a large number
+print,c,c,c,c,c,c,c,c,c                          ; wide printout
+print,ntostr([c,c,c,c,c,c,c,c,c],format=’(20E10.3)’)        ; compact printout
+print,ntostr([c,c,c,c,c,c,c,c,c],format=’(G15.5)’)          ; chooses float or exp
+a=3
+if (a=1) then print, ’yes, a=’,a else print,’no, a=’,a      ; IDL quirk
+a=3                                                         ; try again
+if a eq 1 then print, ’yes, a=’,a else print,’no, a=’,a     ; better
+if (a eq 1) then print, ’yes, a=’,a else print,’no, a=’,a   ; nicer
+if ~(a eq 1) then print, ’yes, a=’,a else print,’no, a=’,a  ; ? ~ operator

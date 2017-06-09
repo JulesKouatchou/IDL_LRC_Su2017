@@ -1,0 +1,18 @@
+rec = {nav_record, time: 0.0, lat:0.0, lon: 0.0, $
+       heading: 0.0}
+
+help, rec 
+help, rec, /structure
+print, rec.lat, rec.lon
+print, n_tags(rec)
+
+xrec = {nav_record}
+xrec.time-- 12.25
+yrec = rec
+yrec.time = 13.50
+
+data = replicate({nav_record}, 100)
+
+a = {nav_record}
+b - {nav_record}
+c = [a, b]

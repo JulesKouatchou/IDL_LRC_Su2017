@@ -1,0 +1,63 @@
+basic plot
+----------
+x=findgen(100)                  ; float array x=0., 1., ...., 99.
+plot,sin(x/10)                  ; 10 doesn’t have to be 10. since x is float
+y=sin(x/5.)/exp(x/50.)          ; but I like float specification for safety
+plot,y                          ; plot,x,y uses array index for x if not given
+plot,alog10(x),y                ; x and y may differ in array size
+oplot,alog10(x),y^2             ; over-plots in existing graph
+plot,alog10(x),y^2+10           ; too much emptiness in this graph
+plot,alog10(x),y^2+10,/ynozero  ; /ynozero is alternative for ynozero=1
+plot,abs(fft(y,1)^2),/ylog      ; power spectrum on logarithmic scale
+plot_io,x,abs(y)+0.1)           ; log-linear plotter, not in the IDL help?
+erase                           ; wipe current plot window
+wdelete                         ; kill current plot window
+while !d.window ne -1 do wdelete,!d.window ; kill all IDL windows ("easy")
+
+plot beautification
+-------------------
+plot,x,y,psym=1                  ; defined for psym=1-7,10; try them out
+; something=something: optional "keyword" parameter
+; check PLOT (? plot); check GRAPHICS KEYWORDS
+plot,x,y,psym=-4                 ; plot both curve and diamonds at sample values
+plot,x,y,linestyle=1             ; defined for linestyle=0,...,5, try them all
+oplot,x,y*2,linestyle=2          ; overplot another graph in the same frame
+plots,[20,70],[-0.5,+0.5]        ; overplot line segment [x1,x2],[y1,y2]
+plots,[50,50],[-1E10,1E10],noclip=0 ; overplot line cut at edges (NOT /clip)
+plot,x,y,xtitle=’x axis’,ytitle=’y axis’,thick=2,xthick=2,ythick=2,$
+charthick=2,charsize=2 ; $ extends to next line
+ytitle=textoidl("sin(x/\alpha) e^{-x/\beta}")
+print,ytitle ; !U=up, !D=down, !N=normal, !7=Greek, !X=entry font
+angstrom=textoidl("\AA")
+angstrom=string(197B) ; alternative = "byte constant" character code
+; find symbol codes such as this by Googling <table isolatin1>
+; but they may not be valid in the PostScript font you choose
+; why the &$#@$% doesn’t IDL accept full latex strings for all fonts?
+xtitle=’x [’+angstrom+’]’
+print,xtitle
+plot,x,y,xtitle=xtitle,ytitle=ytitle,charsize=2
+alpha=5 ; let’s add annotation
+alphaspec=textoidl("\alpha = ")+strtrim(string(alpha),2) ; not so simple...
+alphaspec=greek(’alpha’)+’ = ’+ strtrim(string(alpha),2) ; cg alternative
+alphaname=strlowcase(scope_varname(alpha)) ; get variable name as string
+alphaspec=greek(alphaname)+’ = ’+ strtrim(string(alpha),2)
+xyouts,80,0.7,alphaspec,charsize=2 ; x,y in data units
+xyouts,0.7,0.8,/norm,alphaspec,charsize=2 ; x,y in window size units
+plot,x,y,xrange=[-10,+110],yrange=[-1.5,1.5] ; your choice axis lengths
+plot,x,y,xrange=[-10,+110],yrange=[-1.5,1.5],xstyle=1,ystyle=1
+; now the axes obey your ranges exactly
+
+PostScript figure with traditional IDL
+-------------------------------------
+set_plot,’ps’ ; change plot output to postscript format
+device,filename=’demo1.ps’ ; the plot commands now write to this file
+plot,x,y,xtitle=xtitle,ytitle=ytitle,thick=2, xthick=2,ythick=2,$
+charthick=2,charsize=2 ; redo all the above
+xyouts,80,0.7,alphaspec,charsize=2 ; idem
+device,/close ; done, write postscript file
+set_plot,’x’ ; back to output on Unix/linux/MacOS Xwindows screen
+; set_plot,’win’ ; back to output on a Micro$oft Windows screen
+; help,/device ; /device is the same as device=1 (enable)
+$gv demo1.ps ; starting $ on command line escapes to shell
+filename=’demo1.ps’ ; make it a variable for
+spawn,’gv ’+filename ; generic shell escape, also in a program

@@ -1,0 +1,44 @@
+; Position at (0,0):  
+PLOTS, 0, 0  
+  
+; Draws vector from (0,0) to (1,1):  
+PLOTS, 1, 1, /CONTINUE  
+  
+; Draws two vectors from (1,1) to (2,2) to (3,3):  
+PLOTS, [2,3], [2,3], /CONTINUE  
+
+; Draw a line from (100, 200) to (600, 700), in device coordinates:
+
+PLOTS, [100,600], [200,700], /DEVICE  
+
+; Draw a polyline where the line color is proportional to the ordinate that ends each line segment.
+
+; Set IDL to use decomposed color mode and load a good   
+; colortable to better show the result:  
+DEVICE, DECOMPOSED=0  
+LOADCT, 13  
+  
+; Create datasets X and Y:  
+X = SIN(FINDGEN(100)) & Y = COS(FINDGEN(100))  
+  
+; Now plot X and Y in normalized coordinates with colors as  
+; described above:  
+PLOTS, X, Y, COLOR = BYTSCL(Y, TOP=!D.N_COLORS-1), /NORMAL  
+  
+; Draw 3-D vectors over an established SURFACE plot. The SAVE keyword tells IDL to save the 3-D transformation established by SURFACE.
+
+; Load the standard grayscale color table:  
+LOADCT, 0  
+  
+; Draw a surface plot:  
+SURFACE, DIST(5), /SAVE  
+  
+; Draw a line between (0,0,0) and (3,3,3). The T3D keyword makes   
+; PLOTS use the previously established 3-D transformation:  
+PLOTS, [0,3], [0,3], [0,3], /T3D  
+  
+; Draw a line between (3,0,0) and (3,3,3):  
+PLOTS, [3,3], [0,3], [0,3], /T3D  
+  
+; Draw a line between (0,3,0) and (3,3,3):  
+PLOTS, [0,3], [3,3], [0,3], /T3D  

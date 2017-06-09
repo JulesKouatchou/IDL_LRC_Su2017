@@ -1,0 +1,110 @@
+
+fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
+
+ncfid = NCDF_OPEN(fname)
+
+; Get the dimension information
+;------------------------------
+NCDF_VARGET, ncfid, 'lat', lats
+NCDF_VARGET, ncfid, 'lon', lons
+NCDF_VARGET, ncfid, 'lev', levs
+NCDF_VARGET, ncfid, 'time', tims
+
+nlats = N_ELEMENTS(lats)
+nlons = N_ELEMENTS(lons)
+nlevs = N_ELEMENTS(levs)
+ntims = N_ELEMENTS(tims)
+
+; Get the temperature data
+;-------------------------
+NCDF_VARGET, ncfid, 'T', T
+
+dims = size(T, /dimensions)
+
+NCDF_CLOSE, ncfid
+
+rec = 2     ; for time record
+lev = 35    ; for vertical level
+
+; Extract a 2D slice 
+;-------------------
+T1 = T(*,*,lev, rec)
+
+postScript = 1
+if (postScript eq 1) then plopen,'ps',color=39,fn='mySamplePlot',/portrait ; print to postscript
+
+; Basic contour plot
+Contour, T1, lons, lats
+if (postScript eq 1) then plclose
+
+; contour plot with labels and title
+Contour, T1, lons, lats, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1
+
+
+; Adding contour levels
+Contour, T1, lons, lats, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1, NLevels=12, $
+         C_Labels=Replicate(1, 12)
+
+; Set your own levels
+mylevels = [50, 75, 108, 150, 207]
+n = n_elements(mylevels)
+Contour, T1, lons, lats, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1, Levels=mylevels, $
+         C_Labels=Replicate(1, n)
+
+nlevels = 6
+step = (Max(T1) - Min(T1)) / nlevels
+mylevels = IndGen(nlevels) * step + Min(T1)
+Contour, T1, lons, lats, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1, Levels=mylevels
+
+!P.Color = '000000'xL         ; black lines
+!P.Background = 'FFFFFF'xL    ; white background
+
+
+; Set colors
+;-----------
+Device, Get_Decomposed=currentMode
+Device, Decomposed=0
+
+; load the color tables with nlevels contour colors
+LoadCT, 33, NColors=nlevels, Bottom=1
+
+;cgLoadCT, 5, NColors=nlevels, Bottom=1, Clip=[30,240]
+
+Contour, T1, lons, lats, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1, Levels=mylevels, /NoData 
+
+Contour, T1, lons, lats, Levels=mylevels, $
+         /Overplot, C_Colors=IndGen(nlevels)+1, $
+         C_Labels=everyOther
+
+
+Device, Decomposed=currentMode
+
+; Colorbar and filled contour
+LoadCT, 33
+Contour, T1, lons, lats, /Fill, XTitle='Longitude', $
+         YTitle='Latitude', Title='Atmospheric Temperature', $
+         XStyle=1, YStyle=1, Levels=mylevels, $
+         Position=[0.125, 0.20, 0.95, 0.7]
+
+Contour, T1, lons, lats, Levels=mylevels, $
+         /Overplot, C_Colors=IndGen(nlevels)+1, $
+         C_Labels=everyOther
+
+c = colorbar(Range=[Min(T1),Max(T1)], $
+          Divisions=nlevels, XTicklen=1, XMinor=0, $
+          AnnotateColor='black', Charsize=0.75, $
+          Position=[0.125, 0.92, 0.95, 0.96])
+
+; Zonal mean height
+;------------------
+T2 = 

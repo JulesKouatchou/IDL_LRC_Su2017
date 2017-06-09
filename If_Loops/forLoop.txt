@@ -1,0 +1,7 @@
+FOR I = 1, 4 DO PRINT, I, I^2
+
+f = 1
+for k=1,6 do begin 
+     f = k * f 
+    print, f 
+endfor

@@ -1,0 +1,15 @@
+str1 = 'This is a string.'
+str2 = '10.03456'
+str3 = strmid(str1,3,8)
+print, str3
+print, strpos(str1,str3)
+print, strlen(str1)
+
+x = 10.05
+print, string(x)
+print, string(x,format='(I0)')
+print, string(x,format='(F5.2)')
+
+fileName = '/discover/nobackup/myfile.pro'
+print, file_basename(fileName)
+print, file_dirname(fileName)

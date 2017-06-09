@@ -1,0 +1,9 @@
+A = 1
+B = 10
+REPEAT A = A * 2 UNTIL A GT B
+;
+A = 1
+B = 10
+REPEAT BEGIN
+   A = A * 2 
+ENDREP UNTIL A GT B

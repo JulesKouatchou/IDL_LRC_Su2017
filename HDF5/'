@@ -1,0 +1,14 @@
+FUNCTION addVariableAttribute, dataset_id, attribute_name
+
+    ; Open the attribute
+    attr_id = H5A_OPEN_NAME(dataset_id, attribute_name)
+
+    ; Read the attribute
+    attribute_value = H5A_READ(attr_id)
+
+    ; close all open identifiers
+    H5A_CLOSE, attr_id
+
+    RETURN, attribute_value
+END
+
