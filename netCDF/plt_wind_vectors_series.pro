@@ -39,17 +39,20 @@ ysize = 525
 stream = video.addvideostream(xsize, ysize, framerate)
 
 
-FOR period=0, ntims-1 DO BEGIN
-   ; Extract a 2D slice
-   ;-------------------
+for period=0, ntims-1 do begin
+
+   ; Extract data level for this time period
+   ;----------------------------------------
    U1 = Uwind(*,*,lev, period)
    V1 = Vwind(*,*,lev, period)
    
+   ; Define a subset of the global map with external labels 
    m = map('equirectangular', limit=[10,-170,75,-50], $
        dimensions=[xsize,ysize], position=[.1, .13, .84, .90], $
-       label_position=0, label_angle=0, $
-       color='light gray', label_color='black')
+       label_position=0, label_angle=0, linestyle="dotted", $
+       color='black', /box_axes)
 
+   ; Plot continental outline filled with gray
    cont = mapcontinents(fill_color='light gray')
    
    ; Create a title that updates with timestep
@@ -57,13 +60,15 @@ FOR period=0, ntims-1 DO BEGIN
    strHour = strcompress((string(hour) + ':00'), /remove_all)
    myTitle = 'Vector winds (m/s) at 2005-01-01 ' + strHour 
 
+   ; Plot the wind vectors, using /overplot to use the map area defined above
    vec = vector(U1, V1, lons, lats, dimensions=[xsize,ysize], /overplot, $
          min_value=0, max_value=50,  title=myTitle, $
          rgb_table=39, auto_color=1, length_scale=1., $
-         x_subsample=2, y_subsample=2)  ;/auto_subsample, 
+         x_subsample=2, y_subsample=2)  ; /auto_subsample, (spaced too widely)
 
+   ; Add colorbar to show windspeed key
    c = colorbar(target=vec, orientation=1, $
-       position=[.94, .25, .97, .75])
+       position=[.91, .25, .94, .75])
    
    ;Save plot to *.png
    plotFilename = strcompress(("WindVectors" + strHour + ".png"), /remove_all)
@@ -71,12 +76,10 @@ FOR period=0, ntims-1 DO BEGIN
    
    ;Add image to video file 
    void = video.put(stream, vec.copywindow())
-   
-   ;Clear plot, unless it's the last one
-   if (period LT ntims-1) then vec.delete
-            
-ENDFOR
+               
+endfor
 
+; Close video file
 video = 0
 
 ; Display the movie with GIMP animate
