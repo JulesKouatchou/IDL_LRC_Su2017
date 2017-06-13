@@ -1,3 +1,6 @@
+;--------------------------------------------------------------
+; Description: Use the COARDS convention to produce a file.
+;--------------------------------------------------------------
 ; https://www.unidata.ucar.edu/software/netcdf/examples/programs/pres_temp_4D_wr.pro
 
 pro NC_COARDSconvention_wr

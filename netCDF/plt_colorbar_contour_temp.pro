@@ -1,3 +1,8 @@
+;--------------------------------------------------------------
+; Description: Provide and example of ploting the colorbar.
+;--------------------------------------------------------------
+
+; File name
 fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
 ncfid = NCDF_OPEN(fname)

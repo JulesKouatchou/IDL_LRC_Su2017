@@ -1,5 +1,6 @@
 ;---------------------------------------------------------
-; Plot the zomal mean height at a given latitute over time
+; Description: Plot the zomal mean height at a given 
+;              latitute over time
 ;---------------------------------------------------------
 
 PRO plt_height_timeseries_uwind

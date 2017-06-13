@@ -1,6 +1,16 @@
 
 
 FUNCTION NC_getListVariableAttribute, CDFID, VARNAME
+    ;--------------------------------------------------------------
+    ; Description: Get the list of attributes of a given variables.
+    ;
+    ; Input:
+    ;   - CDFID:   file identifier
+    ;   - VARNAME: name of the variables
+    ;
+    ; Returned value:
+    ;   - List of attributes of the variable
+    ;--------------------------------------------------------------
 
     ;- Check arguments
     if (n_params() ne 2) then $

@@ -1,6 +1,6 @@
 ;--------------------------------------------
-; Plot a sub lat/lon domain at a given level
-;
+; Description: Plot a sub lat/lon domain at 
+;              a given level
 ;--------------------------------------------
 
 PRO plt_subdomain_uwind

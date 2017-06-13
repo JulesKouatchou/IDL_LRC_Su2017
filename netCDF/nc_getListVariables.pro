@@ -1,8 +1,14 @@
-;
-; Given a neCDF file identifier, 
-; get the list of all the variables in the file
-;
 FUNCTION NC_getListVariables, CDFID
+    ;--------------------------------------------------------------
+    ; Description: Get the list of variables.
+    ;
+    ; Input:
+    ;   - CDFID:   file identifier
+    ;
+    ; Returned value:
+    ;   - List of variables in the file
+    ;--------------------------------------------------------------
+
      ;- Check arguments
      if (n_params() ne 1) then $
         message, 'Usage. RESULT = getListVariables(CDFID)'

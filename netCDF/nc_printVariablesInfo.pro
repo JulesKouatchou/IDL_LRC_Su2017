@@ -1,8 +1,11 @@
-;-------------------------------------------------
-; Print the variables information of a netCDF file
-;-------------------------------------------------
 
 PRO NC_printVariablesInfo, cdfid
+    ;--------------------------------------------------------------
+    ; Description: Print the variables information of a netCDF file
+    ;
+    ; Input:
+    ;   - cdfid:   file identifier
+    ;--------------------------------------------------------------
 
     res = NCDF_INQUIRE(cdfid)
 

@@ -1,3 +1,7 @@
+;--------------------------------------------------------------
+; Description: Contour plot and cylindrical map projection.
+;--------------------------------------------------------------
+
 fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
 ncfid = NCDF_OPEN(fname)

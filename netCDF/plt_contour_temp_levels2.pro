@@ -1,3 +1,8 @@
+;--------------------------------------------------------------
+; Description: Simple contour plot with contour levels
+;              determine from actual values of data.
+;--------------------------------------------------------------
+
 fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
 ncfid = NCDF_OPEN(fname)

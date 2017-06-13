@@ -1,3 +1,7 @@
+;--------------------------------------------------------------
+; Description: Wind vector time series.
+;--------------------------------------------------------------
+
 fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
 ncfid = ncdf_open(fname)
