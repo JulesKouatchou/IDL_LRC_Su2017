@@ -1,5 +1,11 @@
 
 FUNCTION HDF4_simpleExample_rd
+    ;------------------------------------------------------
+    ; Description: Reads a data set from a provided file.
+    ;
+    ; Returned value:
+    ;   - data
+    ;------------------------------------------------------
 
     file_name = 'simple_xy.hdf'                           ;Name of file to create
 

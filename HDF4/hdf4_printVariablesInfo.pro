@@ -1,8 +1,14 @@
 ;-------------------------------------------------
-; Print the variables information of a HDF4 file
 ;-------------------------------------------------
 
 PRO HDF4_printVariablesInfo, hdfid
+    ;------------------------------------------------------
+    ; Description: Print the variables information of 
+    ;              a HDF4 file
+    ;
+    ; Input parameters:
+    ;   - hdfid: file identifier
+    ;------------------------------------------------------
 
     ;- Get file information
     HDF_SD_FILEINFO, hdfid, nvars, ngatts

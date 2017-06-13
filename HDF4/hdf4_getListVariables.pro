@@ -1,4 +1,13 @@
 FUNCTION HDF4_getListVariables, hdfid
+    ;------------------------------------------------------
+    ; Description: Provides the list of variables in a file.
+    ;
+    ; Input parameters:
+    ;   - hdfid: file identifier
+    ;
+    ; Returned value:
+    ;   - list of variables
+    ;------------------------------------------------------
 
     if (n_params() ne 1) then $
     message, 'Usage. RESULT = HDF4_getListVariables(HDFID)'

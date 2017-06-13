@@ -1,5 +1,9 @@
 
 pro write_HDF
+    ;----------------------------------------------------
+    ; Description: Create a HDF4 data file and write data
+    ;              following the COARDS convention.
+    ;----------------------------------------------------
 
     nlats = 73L
     nlons = 96L

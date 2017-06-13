@@ -1,5 +1,15 @@
 FUNCTION HDF4_getListVariableAttribute, hdfid, varname
-
+    ;------------------------------------------------------
+    ; Description: Provides the list of attributes of a 
+    ;              variable.
+    ;
+    ; Input parameters:
+    ;   - hdfid:   file identifier
+    ;   - varname: variable name
+    ;
+    ; Returned value:
+    ;   - list of attributes of the variable
+    ;------------------------------------------------------
 
     ;check arguments
     if (n_params() ne 2) then $

@@ -1,5 +1,8 @@
 
 pro HDF4_simpleExample_wr
+    ;------------------------------------------------------
+    ; Description: Creates a simple HDF4 file.
+    ;------------------------------------------------------
 
     file_name = 'simple_xy.hdf'                           ;Name of file to create
 

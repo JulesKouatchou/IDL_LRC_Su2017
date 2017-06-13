@@ -1,4 +1,15 @@
 PRO HDF4_VARREAD_WRAPPER, hdfid, varname, data, _extra=EXTRA_KEYWORDS
+    ;------------------------------------------------------
+    ; Description: wrapper procedure for reading a variable
+    ;              from a file.
+    ;
+    ; Input parameters:
+    ;   - hdfid: file identifier
+    ;   - varname: variable name
+    ;
+    ; Output parameters:
+    ;   - data
+    ;------------------------------------------------------
 
     ;- Check arguments
     if (n_params() ne 3) then $
