@@ -1,6 +1,6 @@
 pro test
 
-    fname = '/gpfsm/dnb32/jkouatch/Tutorial_IDL/netCDF/ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
+    fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
     IF (file_test(fname) EQ 1) then begin
        print, fname

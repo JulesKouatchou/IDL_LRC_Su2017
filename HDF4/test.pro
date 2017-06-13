@@ -1,7 +1,7 @@
 pro test
 
     varName = 'T'
-    fname = '/gpfsm/dnb32/jkouatch/Tutorial_IDL/HDF4/hdFiles/MERRA300.prod.assim.tavg3_3d_chm_Fv.20050101.hdf'
+    fname = 'hdFiles/MERRA300.prod.assim.tavg3_3d_chm_Fv.20050101.hdf'
 
     IF (file_test(fname) EQ 0) THEN BEGIN
        print, 'File Name: ', fname
