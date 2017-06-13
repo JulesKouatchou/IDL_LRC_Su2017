@@ -1,6 +1,17 @@
 
 
 FUNCTION HDF5_getListVariableAttribute, h5fid, VARNAME
+    ;--------------------------------------------------------
+    ; Description: Provides the list of attributes associated
+    ;              with a variable.
+    ;
+    ; Input parameters:
+    ;   - h5fid:    file identifier
+    ;   - VARNAME:  variable name
+    ;   
+    ; Returned value:
+    ;   - List of attributes associated with the variable
+    ;--------------------------------------------------------
 
     ;- Check arguments
     if (n_params() ne 2) then $

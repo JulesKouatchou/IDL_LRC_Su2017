@@ -1,5 +1,9 @@
 
 pro HDF5_simpleExample_wr
+    ;--------------------------------------------------------
+    ; Description: Creates a new HDF5 file and write a data
+    ;              array.
+    ;--------------------------------------------------------
 
     file_name = 'simple_xy.h5'        ;Name of file to create
 
@@ -9,7 +13,7 @@ pro HDF5_simpleExample_wr
 
     IF (FILE_TEST(file_name)) THEN FILE_DELETE, file_name
     ;--------------------
-    ; Create the HDF file
+    ; Create the HDF5 file
     ;--------------------
     h5fid = H5F_CREATE(file_name)
 

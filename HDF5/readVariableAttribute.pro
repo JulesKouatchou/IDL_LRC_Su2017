@@ -1,4 +1,16 @@
 FUNCTION readVariableAttribute, dataset_id, attribute_name
+    ;--------------------------------------------------------
+    ; Description: For a given identifier of a dataset object,
+    ;              this function returns the value of an
+    ;              attribute.
+    ;
+    ; Input parameters:
+    ;   - dataset_id:      identifier of the dataset object
+    ;   - attribute_name:  name of the attribute
+    ;
+    ; Returned value:
+    ;   - value of the attribute
+    ;--------------------------------------------------------
 
     ; Open the attribute
     attr_id = H5A_OPEN_NAME(dataset_id, attribute_name)

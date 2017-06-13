@@ -1,5 +1,12 @@
 
 FUNCTION HDF5_simpleExample_rd
+    ;--------------------------------------------------------
+    ; Description: Reads a single variable form an existing 
+    ;              files.
+    ;
+    ; Returned value:
+    ;   - Data array
+    ;--------------------------------------------------------
 
     file_name = 'simple_xy.h5'                           ;Name of file to create
 
@@ -27,6 +34,5 @@ FUNCTION HDF5_simpleExample_rd
     IF (count NE 0) THEN MESSAGE, 'Error reading data.'
 
     RETURN, data
-
 
 END

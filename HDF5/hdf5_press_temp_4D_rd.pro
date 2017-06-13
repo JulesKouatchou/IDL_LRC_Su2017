@@ -1,21 +1,26 @@
 FUNCTION HDF5_press_temp_4D_rd, s
-
-    ; Purpose:
-    ;      Read a HDF5 input file (pres_temp_4d.h5) and returns  a data structure containing
-    ;      two 12 x 6 x 2 arrays of single-precision floating-point numbers, 'pressure' and 'temperature', 
-    ;      to the file, along with coordinate variables 'longitude' and 'latitude'.
+    ;--------------------------------------------------------
+    ; Description: Read a HDF5 input file (pres_temp_4d.h5) 
+    ;              and returns  a data structure containing
+    ;              two arrays 'pressure' and 'temperature', 
+    ;              to the file, along with coordinate 
+    ;              variables 'longitude' and 'latitude'.
     ;
+    ; Input parameters:
+    ;   - s:      record number in the file
+    ;--------------------------------------------------------
 
-    COMPILE_OPT IDL2                                                     ;Set compile options
 
-    file_name  = 'pres_temp_4d.h5'                                       ;Name of file to create
+    COMPILE_OPT IDL2                                 ;Set compile options
+
+    file_name  = 'pres_temp_4d.h5'                   ;Name of file to create
 
     IF NOT FILE_TEST(file_name) THEN $
        MESSAGE, 'File does not exist'
 
-    IF (N_PARAMS() EQ 0) THEN s = 0                     ;Default time index
+    IF (N_PARAMS() EQ 0) THEN s = 0                  ;Default time index
 
-    s0 = LONG(s)                                        ;Ensure time index is LONG
+    s0 = LONG(s)                                     ;Ensure time index is LONG
 
     ;      Open input file
     h5fid  = H5F_OPEN(file_name)  

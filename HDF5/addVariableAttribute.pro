@@ -1,8 +1,14 @@
 PRO addVariableAttribute, dataset_id, attribute_name=name, attribute_value=val
-
-    ; Creates and writes a string attribute and attached it to 
-    ; the object reperesented by dataset_id.
-
+    ;--------------------------------------------------------
+    ; Description: Creates and writes a string attribute and 
+    ;              attached it to the object reperesented by 
+    ;              dataset_id.
+    ;
+    ; Input parameters:
+    ;   - dataset_id:      identifier of the dataset object
+    ;   - attribute_name:  name of the attribute
+    ;   - attribute_value: value of the attribute
+    ;--------------------------------------------------------
 
     ; Get data type and space
     attr_datatype_id  = H5T_IDL_CREATE(val)

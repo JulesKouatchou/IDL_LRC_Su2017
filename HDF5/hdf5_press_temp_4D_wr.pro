@@ -1,39 +1,40 @@
 PRO HDF5_press_temp_4D_wr
+    ;--------------------------------------------------------
+    ; Description: Create a HDF5 output file (pres_temp_4d.h5)
+    ;              and writes two 12 x 6 x 2 arrays
+    ;              'pressure' and 'temperature', to the file, 
+    ;              along with coordinate variables 'longitude' 
+    ;              and 'latitude'.
+    ;--------------------------------------------------------
 
-    ; Purpose:
-    ;      Create a HDF5 output file (pres_temp_4d.h5) and writes two 12 x 6 x 2 arrays
-    ;      of single-precision floating-point numbers, 'pressure' and 'temperature', 
-    ;      to the file, along with coordinate variables 'longitude' and 'latitude'.
-    ;
+    COMPILE_OPT IDL2                                 ;Set compile options
 
-    COMPILE_OPT IDL2                                                     ;Set compile options
-
-    file_name  = 'pres_temp_4d.h5'                                       ;Name of file to create
+    file_name  = 'pres_temp_4d.h5'                   ;Name of file to create
 
     ;      Compute coordinate variables
 
-    nx      =     12                                                     ;Number of x-coordinates
-    xmin    = -125.0                                                     ;Minimum longitude
-    xmax    =  -70.0                                                     ;Maximum longitude
-    dx      = (xmax - xmin)/(nx - 1)                                     ;Longitude spacing
-    x       = xmin + dx*FINDGEN(nx)                                      ;Compute x-coordinates
+    nx      =     12                                 ;Number of x-coordinates
+    xmin    = -125.0                                 ;Minimum longitude
+    xmax    =  -70.0                                 ;Maximum longitude
+    dx      = (xmax - xmin)/(nx - 1)                 ;Longitude spacing
+    x       = xmin + dx*FINDGEN(nx)                  ;Compute x-coordinates
 
-    ny      =      6                                                     ;Number of y-coordinates
-    ymin    =   25.0                                                     ;Minimum latitude
-    ymax    =   50.0                                                     ;Maximum latitude
-    dy      = (ymax - ymin)/(ny - 1)                                     ;Latitude spacing
-    y       = ymin + dy*FINDGEN(ny)                                      ;Compute y-coordinates
+    ny      =      6                                 ;Number of y-coordinates
+    ymin    =   25.0                                 ;Minimum latitude
+    ymax    =   50.0                                 ;Maximum latitude
+    dy      = (ymax - ymin)/(ny - 1)                 ;Latitude spacing
+    y       = ymin + dy*FINDGEN(ny)                  ;Compute y-coordinates
     
-    nz      =      2                                                     ;Number of vertical levels
-    nt      =      3                                                     ;Number of time steps
+    nz      =      2                                 ;Number of vertical levels
+    nt      =      3                                 ;Number of time steps
 
     z       = FINDGEN(nz)
     timeArr = FINDGEN(nt)*3*60
 
     ;      Compute dependent variables
 
-    pressure    = 900.0 + FINDGEN(nx, ny, nz)                            ;Create 2-D array of pressure data
-    temperature =   9.0 + FINDGEN(nx, ny, nz)                            ;Create 2-D array of temperature data
+    pressure    = 900.0 + FINDGEN(nx, ny, nz)        ;Create 2-D array of pressure data
+    temperature =   9.0 + FINDGEN(nx, ny, nz)        ;Create 2-D array of temperature data
 
     IF (FILE_TEST(file_name)) THEN FILE_DELETE, file_name
 
