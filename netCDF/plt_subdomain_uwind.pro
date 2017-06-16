@@ -40,7 +40,7 @@ PRO plt_subdomain_uwind
     
     ; Read one time record of the variable
     NCDF_VARGET, ncfid, vName, var, $
-                 OFFSET = [0, 0, ref_level, ref_time], $
+                 OFFSET = [imin_lon, imin_lat, ref_level, ref_time], $
                  COUNT  = [nlons, nlats, 1, 1], $
                  STRIDE = [1, 1, 1, 1]
     ; Close file

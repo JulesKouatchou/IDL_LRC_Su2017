@@ -20,9 +20,9 @@ ntims = N_ELEMENTS(tims)
 
 ; Get the temperature data
 ;-------------------------
-NCDF_VARGET, ncfid, 'T', T
+NCDF_VARGET, ncfid, 'T', temperature
 
-dims = size(T, /dimensions)
+dims = size(temperature, /dimensions)
 
 NCDF_CLOSE, ncfid
 
@@ -31,18 +31,18 @@ lev = 35    ; for vertical level
 
 ; Extract a 2D slice
 ;-------------------
-T1 = T(*,*,lev, rec)
+tempSlice = temperature(*,*,lev, rec)
 
 num_levels = 6
-step = (Max(T1) - Min(T1)) / num_levels
-mylevels = IndGen(num_levels) * step + Min(T1)
+step = (Max(tempSlice) - Min(tempSlice)) / num_levels
+mylevels = IndGen(num_levels) * step + Min(tempSlice)
 
 ncolors = num_levels + 1
 bottom = 1
 
 c_levels = mylevels
-c_labels = Replicate(1, num_levels)
-c_colors = indgen(ncolors) + bottom
+c_labels = REPLICATE(1, num_levels)
+c_colors = INDGEN(ncolors) + bottom
 
 center_lat = -90.0
 center_lon = 180.0
@@ -52,9 +52,9 @@ Map_Set, /Stereographic, center_lat, center_lon, $
          /Advance, /Continents, /Grid, /Isotropic, $
          /NoErase, /Horizon, /NoBorder
 
-Contour, T1, lons, lats, levels=c_levels, c_colors=c_colors, /Cell_fill, /Overplot
+CONTOUR, tempSlice, lons, lats, levels=c_levels, c_colors=c_colors, /Cell_fill, /Overplot
 
-Contour, T1, lons, lats, /Overplot, $
+CONTOUR, tempSlice, lons, lats, /Overplot, $
          color = 0, levels=c_levels; , c_labels = c_labels
 
 Map_Grid, Color=1, GLINESTYLE=2

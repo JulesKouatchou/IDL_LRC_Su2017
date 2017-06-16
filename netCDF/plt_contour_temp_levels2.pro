@@ -21,9 +21,9 @@ ntims = N_ELEMENTS(tims)
 
 ; Get the temperature data
 ;-------------------------
-NCDF_VARGET, ncfid, 'T', T
+NCDF_VARGET, ncfid, 'T', temperature
 
-dims = size(T, /dimensions)
+dims = size(temperature, /DIMENSIONS)
 
 NCDF_CLOSE, ncfid
 
@@ -32,13 +32,13 @@ lev = 35    ; for vertical level
 
 ; Extract a 2D slice
 ;-------------------
-T1 = T(*,*,lev, rec)
+tempSlice = temperature(*,*,lev, rec)
 
 num_levels = 6
-step = (Max(T1) - Min(T1)) / num_levels
-mylevels = IndGen(num_levels) * step + Min(T1)
+step = (MAX(tempSlice) - MIN(tempSlice)) / num_levels
+mylevels = INDGEN(num_levels) * step + MIN(tempSlice)
 
-Contour, T1, lons, lats, XTitle='Longitude', $
+CONTOUR, tempSlice, lons, lats, XTitle='Longitude', $
          YTitle='Latitude', Title='Atmospheric Temperature', $
          XStyle=1, YStyle=1, Levels=mylevels, $
          C_Labels=Replicate(1, num_levels)

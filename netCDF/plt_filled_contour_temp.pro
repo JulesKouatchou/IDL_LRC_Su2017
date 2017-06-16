@@ -20,9 +20,9 @@ ntims = N_ELEMENTS(tims)
 
 ; Get the temperature data
 ;-------------------------
-NCDF_VARGET, ncfid, 'T', T
+NCDF_VARGET, ncfid, 'T', temperature
 
-dims = size(T, /dimensions)
+dims = size(temperature, /DIMENSIONS)
 
 NCDF_CLOSE, ncfid
 
@@ -31,24 +31,24 @@ lev = 35    ; for vertical level
 
 ; Extract a 2D slice
 ;-------------------
-T1 = T(*,*,lev, rec)
+tempSlice = temperature(*,*,lev, rec)
 
 num_levels = 6
-step = (Max(T1) - Min(T1)) / num_levels
-mylevels = IndGen(num_levels) * step + Min(T1)
+step = (Max(tempSlice) - Min(tempSlice)) / num_levels
+mylevels = INDGEN(num_levels) * step + Min(tempSlice)
 
 ncolors = num_levels + 1
 bottom = 1
 
 c_levels = mylevels
-c_labels = Replicate(1, num_levels)
-c_colors = indgen(ncolors) + bottom
-loadct, 33, ncolors=ncolors, bottom=bottom
+c_labels = REPLICATE(1, num_levels)
+c_colors = INDGEN(ncolors) + bottom
+LOADCT, 33, ncolors=ncolors, bottom=bottom
 
-Contour, T1, lons, lats, $
+CONTOUR, tempSlice, lons, lats, $
          levels=c_levels, c_colors=c_colors, /fill, $
          XTitle='Longitude',  YTitle='Latitude', $
          Title='Atmospheric Temperature', $
          XStyle=1, YStyle=1
 
-Contour, T1, lons, lats, Levels=mylevels, C_Labels=c_labels, /overplot
+CONTOUR, tempSlice, lons, lats, Levels=mylevels, C_Labels=c_labels, /overplot
