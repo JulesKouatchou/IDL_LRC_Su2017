@@ -1,6 +1,11 @@
+;--------------------------------------------------------------
+; Description: Filled-contour plot with user-defined colortable
+;              showing step colorbar and time-series animation.
+;              Also uses updated 8.x syntax for data objects.
+;--------------------------------------------------------------
 ;pro plt_contour_series_setColor
 
-fname = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
+fName = 'ncFiles/MERRA300.prod.assim.20050101.1x1.25.nc'
 
 ncfid = NCDF_OPEN(fname)
 
@@ -10,7 +15,7 @@ NCDF_VARGET, ncfid, 'lat', lats
 NCDF_VARGET, ncfid, 'lon', lons
 NCDF_VARGET, ncfid, 'lev', levs
 NCDF_VARGET, ncfid, 'time', tims   ; minutes since 2005-01-01 00:00:00
-
+    
 nlats = N_ELEMENTS(lats)
 nlons = N_ELEMENTS(lons)
 nlevs = N_ELEMENTS(levs)
@@ -22,7 +27,8 @@ NCDF_VARGET, ncfid, 'T', TempK
 
 NCDF_CLOSE, ncfid
 
-lev = 71    ; for vertical level to plot (71 = sfc)
+; Set vertical level to plot (71 = sfc)
+lev = 71
 
 ; Set 11 contour levels (for 10 filled-color intervals)
 numLevels = 11
@@ -84,6 +90,6 @@ ENDFOR
 ; Close video stream
 video = 0
 
-; display the movie with gimp
-spawn, 'animate -delay 100 video_filled_contours.avi'
+; display the movie with GIMP
+SPAWN, 'animate -delay 100 video_filled_contours.avi'
 end
