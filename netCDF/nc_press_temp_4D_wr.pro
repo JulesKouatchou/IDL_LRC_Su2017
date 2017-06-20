@@ -59,37 +59,41 @@ PRO NC_press_temp_4D_wr, CLOBBER = clobber
     
     ;      Create output file and write data
     
-    id  = NCDF_CREATE(file_name, CLOBBER = clobber)                      ;Create netCDF output file
+    ncfid  = NCDF_CREATE(file_name, CLOBBER = clobber)                      ;Create netCDF output file
     
-    zid = NCDF_DIMDEF(id, 'level',     nz)                               ;Define z-dimension
-    yid = NCDF_DIMDEF(id, 'latitude',  ny)                               ;Define y-dimension
-    xid = NCDF_DIMDEF(id, 'longitude', nx)                               ;Define x-dimension
-    tid = NCDF_DIMDEF(id, 'time',      /UNLIMITED)                       ;Define t-dimension (unlimited)
+    zid = NCDF_DIMDEF(ncfid, 'level',     nz)                               ;Define z-dimension
+    yid = NCDF_DIMDEF(ncfid, 'latitude',  ny)                               ;Define y-dimension
+    xid = NCDF_DIMDEF(ncfid, 'longitude', nx)                               ;Define x-dimension
+    tid = NCDF_DIMDEF(ncfid, 'time',      /UNLIMITED)                       ;Define t-dimension (unlimited)
 
-    vid = NCDF_VARDEF(id, 'latitude',     yid,       /FLOAT)             ;Define latitude variable
-    vid = NCDF_VARDEF(id, 'longitude',    xid,       /FLOAT)             ;Define longitude variable
+    vid = NCDF_VARDEF(ncfid, 'latitude',     yid,       /FLOAT)             ;Define latitude variable
+    vid = NCDF_VARDEF(ncfid, 'longitude',    xid,       /FLOAT)             ;Define longitude variable
 
-    vid = NCDF_VARDEF(id, 'pressure',    [xid, yid, zid, tid], /FLOAT)   ;Define pressure variable
-    vid = NCDF_VARDEF(id, 'temperature', [xid, yid, zid, tid], /FLOAT)   ;Define temperature variable
+    vid = NCDF_VARDEF(ncfid, 'pressure',    [xid, yid, zid, tid], /FLOAT)   ;Define pressure variable
+    vid = NCDF_VARDEF(ncfid, 'temperature', [xid, yid, zid, tid], /FLOAT)   ;Define temperature variable
 
-    NCDF_ATTPUT, id, 'longitude',   'units', 'degrees east'              ;Write longitude units attribute
-    NCDF_ATTPUT, id, 'latitude',    'units', 'degrees north'             ;Write latitude units attribute
-    NCDF_ATTPUT, id, 'pressure',    'units', 'hPa'                       ;Write pressure units attribute
-    NCDF_ATTPUT, id, 'temperature', 'units', 'degree_Celsius'            ;Write temperature units attribute
+    NCDF_ATTPUT, ncfid, 'longitude',   'units', 'degrees east'              ;Write longitude units attribute
+    NCDF_ATTPUT, ncfid, 'latitude',    'units', 'degrees north'             ;Write latitude units attribute
+    NCDF_ATTPUT, ncfid, 'pressure',    'units', 'hPa'                       ;Write pressure units attribute
+    NCDF_ATTPUT, ncfid, 'temperature', 'units', 'degree_Celsius'            ;Write temperature units attribute
 
-    NCDF_CONTROL, id, /ENDEF                                             ;Exit define mode
+    ; Set global attributes
+    NCDF_ATTPUT, ncFid, /GLOBAL, 'Title', 'Sample netCDF file'
+    NCDF_ATTPUT, ncFid, /GLOBAL, 'Description', 'Attributes and unlimited dim'
 
-    NCDF_VARPUT, id, 'longitude',   x                                    ;Write longitude to file
-    NCDF_VARPUT, id, 'latitude',    y                                    ;Write latitude to file
+    NCDF_CONTROL, ncfid, /ENDEF                                             ;Exit define mode
+
+    NCDF_VARPUT, ncfid, 'longitude',   x                                    ;Write longitude to file
+    NCDF_VARPUT, ncfid, 'latitude',    y                                    ;Write latitude to file
 
     FOR s = 0, nt-1 DO BEGIN                                             ;Time index
-        NCDF_VARPUT, id, 'pressure',    pressure, $                       ;Write pressure to file
+        NCDF_VARPUT, ncfid, 'pressure',    pressure, $                       ;Write pressure to file
            OFFSET = [0, 0, 0, s], COUNT = [nx, ny, nz, 1]
-        NCDF_VARPUT, id, 'temperature', temperature, $                    ;Write temperature to file
+        NCDF_VARPUT, ncfid, 'temperature', temperature, $                    ;Write temperature to file
            OFFSET = [0, 0, 0, s], COUNT = [nx, ny, nz, 1]
     ENDFOR
 
-    NCDF_CLOSE, id                                                       ;Close netCDF output file
+    NCDF_CLOSE, ncfid                                                       ;Close netCDF output file
 
 END
 
